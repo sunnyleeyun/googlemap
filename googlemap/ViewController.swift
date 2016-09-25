@@ -12,7 +12,7 @@ import CoreLocation
 
 class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     var locationManager : CLLocationManager!
-    //
+    
     @IBOutlet weak var myMap: MKMapView!
     
     override func viewDidLoad() {

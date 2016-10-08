@@ -22,7 +22,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     var pinAnnotationView:MKPinAnnotationView!
     
 
-    @IBAction func showSearchBar(sender: AnyObject) {
+    @IBAction func showSearchBar(_ sender: AnyObject) {
         searchController = UISearchController(searchResultsController: nil)
         searchController.hidesNavigationBarDuringPresentation = false
         self.searchController.searchBar.delegate = self
@@ -62,11 +62,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         }
         
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.activityType = .Fitness
+        locationManager.activityType = .fitness
         locationManager.delegate = self
         locationManager.startUpdatingLocation()
         
-        myMap.userTrackingMode = .FollowWithHeading
+        myMap.userTrackingMode = .followWithHeading
         
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate!
@@ -81,19 +81,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         // Dispose of any resources that can be recreated.
     }
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let coordinate = locations[0].coordinate
         
         print("緯度：\(coordinate.latitude)")
         print("經度：\(coordinate.longitude)")
     }
     
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation{
             return nil
         }
         let identifier = "MyPin"
-        var result = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier)
+        var result = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
         if result == nil{
             result = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             //result = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
@@ -129,27 +129,27 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                     }
                 }
             }
-        }
+        } as! CLGeocodeCompletionHandler as! CLGeocodeCompletionHandler as! CLGeocodeCompletionHandler as! CLGeocodeCompletionHandler as! CLGeocodeCompletionHandler as! CLGeocodeCompletionHandler as! CLGeocodeCompletionHandler
     }
     func sample2(){
         let request = MKLocalSearchRequest()
         request.naturalLanguageQuery = "Toilet"
         request.region = myMap.region
         let search = MKLocalSearch(request: request)
-        search.startWithCompletionHandler{
+        search.start{
             (response:MKLocalSearchResponse?, error:NSError?) -> Void in
             if error == nil && response != nil{
                 for item in response!.mapItems{
                     self.myMap.addAnnotation(item.placemark )
                 }
             }
-        }
+        } as! MKLocalSearchCompletionHandler as! MKLocalSearchCompletionHandler as! MKLocalSearchCompletionHandler as! MKLocalSearchCompletionHandler as! MKLocalSearchCompletionHandler as! MKLocalSearchCompletionHandler as! MKLocalSearchCompletionHandler
     }
     
     
-    @IBAction func longPressAction(sender: AnyObject) {
-        let touchPoint = sender.locationInView(self.myMap)
-        let coordinate = myMap.convertPoint(touchPoint, toCoordinateFromView: self.myMap)
+    @IBAction func longPressAction(_ sender: AnyObject) {
+        let touchPoint = sender.location(in: self.myMap)
+        let coordinate = myMap.convert(touchPoint, toCoordinateFrom: self.myMap)
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
         myMap.addAnnotation(annotation)

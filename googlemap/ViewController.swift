@@ -10,8 +10,8 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, UISearchBarDelegate {
-    //
+class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDelegate, MKMapViewDelegate {
+    
     var searchController:UISearchController!
     var annotation:MKAnnotation!
     var localSearchRequest:MKLocalSearchRequest!
@@ -41,9 +41,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
    //     let latitude:CLLocationDegrees = 48.858532
    //     let longitude:CLLocationDegrees = 2.294481
    //     let coordinate:CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
-        
-        //sample1()
-        //sample2()
         
         let coordinate = locationManager.location?.coordinate
         print("緯度：\(coordinate?.latitude)")
@@ -109,43 +106,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         return result
     }
     
-    func sample1(){
-        let tunnel = CLLocation(latitude: 25.008547619473767, longitude: 121.5611477602709)
-        let geocoder = CLGeocoder()
-        geocoder.reverseGeocodeLocation(tunnel){
-            (placemarks:[CLPlacemark]?, error:NSError?) -> Void in
-            if placemarks != nil{
-                let placemark = placemarks![0]
-                let infoDict = placemark.addressDictionary
-                if infoDict != nil{
-                    for (key, value) in infoDict!{
-                        if value is NSArray{
-                            for info in (value as! NSArray){
-                                print("\(key):\(info)")
-                            }
-                        }else if value is NSString{
-                                print("\(key):\(value)")
-                            }
-                    }
-                }
-            }
-        } as! CLGeocodeCompletionHandler as! CLGeocodeCompletionHandler as! CLGeocodeCompletionHandler as! CLGeocodeCompletionHandler as! CLGeocodeCompletionHandler as! CLGeocodeCompletionHandler as! CLGeocodeCompletionHandler
-    }
-    func sample2(){
-        let request = MKLocalSearchRequest()
-        request.naturalLanguageQuery = "Toilet"
-        request.region = myMap.region
-        let search = MKLocalSearch(request: request)
-        search.start{
-            (response:MKLocalSearchResponse?, error:NSError?) -> Void in
-            if error == nil && response != nil{
-                for item in response!.mapItems{
-                    self.myMap.addAnnotation(item.placemark )
-                }
-            }
-        } as! MKLocalSearchCompletionHandler as! MKLocalSearchCompletionHandler as! MKLocalSearchCompletionHandler as! MKLocalSearchCompletionHandler as! MKLocalSearchCompletionHandler as! MKLocalSearchCompletionHandler as! MKLocalSearchCompletionHandler
-    }
-    
     
     @IBAction func longPressAction(_ sender: AnyObject) {
         let touchPoint = sender.location(in: self.myMap)
@@ -154,7 +114,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         annotation.coordinate = coordinate
         myMap.addAnnotation(annotation)
     }
-    
+   // /*
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
         //1
         searchBar.resignFirstResponder()
@@ -182,9 +142,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             
             
             self.pinAnnotationView = MKPinAnnotationView(annotation: self.pointAnnotation, reuseIdentifier: nil)
-            self.mapView.centerCoordinate = self.pointAnnotation.coordinate
-            self.mapView.addAnnotation(self.pinAnnotationView.annotation!)
+            self.myMap.centerCoordinate = self.pointAnnotation.coordinate
+            self.myMap.addAnnotation(self.pinAnnotationView.annotation!)
         }
     }
+ //*/
 }
 
